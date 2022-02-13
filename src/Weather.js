@@ -12,10 +12,15 @@ export default function Weather() {
       `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${API}&units=imperial`
     )
       .then((resp) => resp.json())
-      .then((data) => setData(data));
+      .then((data) => setData((data)));
     setZip("");
   };
   let renderedData = null;
+  let today = new Date();
+  switch(today){
+    case 0: today === 'Sunday'
+    case 1: today === 'Monday'
+  }
 
   if (data === null) {
     renderedData = null;
@@ -23,10 +28,10 @@ export default function Weather() {
     renderedData = (
       <div>
         <div>{data.name}</div>
+        <div>{today.getDay()}</div>
         <div>{data.main.temp_min}</div>
         <div>{data.main.temp_min}</div>
-        <div>{data.weather[0][1]}</div>
-        <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="img"></img>
+        <img src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt={data.weather[0].description}></img>
       </div>
     );
   }
