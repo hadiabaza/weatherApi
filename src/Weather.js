@@ -25,30 +25,35 @@ export default function Weather() {
     renderedData = null;
   } else {
     renderedData = (
-      <div>
+      <div className="grid-container">
         <div>{data.name}</div>
         <div>{daysOfWeek[day]}</div>
-        <div>{data.main.temp_min}</div>
-        <div>{data.main.temp_max}</div>
         <img
           src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
           alt={data.weather[0].description}
         ></img>
+        <div>Low: {data.main.temp_min}</div>
+        <div>High: {data.main.temp_max}</div>
       </div>
     );
   }
 
   return (
     <div>
-      <div>Weather</div>
+      <div className="title">Weather</div>
       <input
+        className="input-field"
         type="text"
         placeholder="Enter Zip Code"
         onChange={(e) => setZip(e.target.value)}
         value={zip}
       ></input>
-      <button onClick={() => fetchWeather(1)}>Weather Report</button>
-      <button onClick={() => fetchWeather(5)}>5 day Forecast</button>
+      <button classname="button" onClick={() => fetchWeather(1)}>
+        Weather Report
+      </button>
+      <button classname="button" onClick={() => fetchWeather(5)}>
+        5 day Forecast
+      </button>
       {renderedData}
     </div>
   );
