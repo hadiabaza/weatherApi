@@ -6,31 +6,21 @@ export default function Weather() {
 
   const [data, setData] = useState(null);
   const [zip, setZip] = useState("");
-  const [numDayForecast, setNumDayForecast] = useState(0)
 
-  const fetchWeather = () => {
-    if(button.getAtrribute(id == 1)){
-      setNumDayForecast(1)
-    } else {
-      setNumDayForecast(5)
-    }
+  const fetchWeather = (numDays) => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${API}&units=imperial&cnt=${numDayForecast}`
+      `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${API}&units=imperial&cnt=${numDays}`
     )
       .then((resp) => resp.json())
-      .then((data) => setData((data)));
+      .then((data) => setData(data));
     setZip("");
   };
 
-  // const fetchFiveDay = () => {
-    
-  // }
-
   let renderedData = null;
   let today = new Date();
-  let day = today.getDay()
-  let daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat']
-  
+  let day = today.getDay();
+  let daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+
   if (data === null) {
     renderedData = null;
   } else {
@@ -40,7 +30,10 @@ export default function Weather() {
         <div>{daysOfWeek[day]}</div>
         <div>{data.main.temp_min}</div>
         <div>{data.main.temp_max}</div>
-        <img src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt={data.weather[0].description}></img>
+        <img
+          src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+          alt={data.weather[0].description}
+        ></img>
       </div>
     );
   }
@@ -54,8 +47,8 @@ export default function Weather() {
         onChange={(e) => setZip(e.target.value)}
         value={zip}
       ></input>
-      <button data-id='1'onClick={() => fetchWeather()}>Weather Report</button>
-      <button data-id ='5'onClick={() => fetchWeather()}>5 day Forecast</button>
+      <button onClick={() => fetchWeather(1)}>Weather Report</button>
+      <button onClick={() => fetchWeather(5)}>5 day Forecast</button>
       {renderedData}
     </div>
   );
