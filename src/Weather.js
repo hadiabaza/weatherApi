@@ -8,11 +8,14 @@ export default function Weather() {
   const [zip, setZip] = useState("");
 
   const fetchWeather = (numDays) => {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${API}&units=imperial&cnt=${numDays}`
-    )
-      .then((resp) => resp.json())
-      .then((data) => setData(data));
+    const oneDay = `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${API}&units=imperial&cnt=${numDays}`;
+    const fiveDay = `api.openweathermap.org/data/2.5/forecast/daily?zip=${zip}&appid=${API}&cnt=${numDays}`;
+    // console.log(numDays);
+    numDays === 1
+      ? fetch(oneDay)
+      : fetch(fiveDay)
+          .then((resp) => resp.json())
+          .then((data) => setData(data));
     setZip("");
   };
 
@@ -48,12 +51,8 @@ export default function Weather() {
         onChange={(e) => setZip(e.target.value)}
         value={zip}
       ></input>
-      <button classname="button" onClick={() => fetchWeather(1)}>
-        Weather Report
-      </button>
-      <button classname="button" onClick={() => fetchWeather(5)}>
-        5 day Forecast
-      </button>
+      <button onClick={() => fetchWeather(1)}>Weather Report</button>
+      <button onClick={() => fetchWeather(5)}>5 day Forecast</button>
       {renderedData}
     </div>
   );
