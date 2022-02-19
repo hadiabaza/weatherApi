@@ -9,13 +9,11 @@ export default function Weather() {
 
   const fetchWeather = (numDays) => {
     const oneDay = `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${API}&units=imperial&cnt=${numDays}`;
-    const fiveDay = `api.openweathermap.org/data/2.5/forecast/daily?zip=${zip}&appid=${API}&cnt=${numDays}`;
+    const fiveDay = `https://api.openweathermap.org/data/2.5/forecast/daily?zip=${zip}&appid=${API}&cnt=${numDays}`;
     // console.log(numDays);
-    numDays === 1
-      ? fetch(oneDay)
-      : fetch(fiveDay)
+    fetch(numDays === 1? oneDay: fiveDay)
           .then((resp) => resp.json())
-          .then((data) => setData(data));
+          .then((data) => setData((data)));
     setZip("");
   };
 
